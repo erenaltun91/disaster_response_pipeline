@@ -11,6 +11,7 @@ from nltk.stem import WordNetLemmatizer
 from sqlalchemy import create_engine
 import pickle
 
+from sklearn.ensemble import AdaBoostClassifier
 from sklearn.pipeline import Pipeline
 from sklearn.metrics import confusion_matrix
 from sklearn.model_selection import train_test_split
@@ -59,7 +60,7 @@ def build_model():
                     ('vect', CountVectorizer(tokenizer=tokenize)),
                     ('tfidf', TfidfTransformer())
                 ])),
-        ('clf' , MultiOutputClassifier(KNeighborsClassifier()))    
+        ('clf' , MultiOutputClassifier(AdaBoostClassifier()))    
     ])
     return pipeline
 
@@ -69,7 +70,7 @@ def evaluate_model(model, X_test, Y_test, category_names):
     c=0
     for column in category_names:
         print(column)
-        print(classification_report(Y_test[c],predicted[c],target_names=column))
+        print(classification_report(Y_test[c],predicted[c]))
         c = c+1
 
     
