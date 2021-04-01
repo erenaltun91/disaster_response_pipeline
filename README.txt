@@ -16,3 +16,10 @@ Run the following command in the app's directory to run your web app:
 
 Go to http://0.0.0.0:3001/
 
+Resoruces:
+https://www.kaggle.com/depture/multiclass-and-multi-output-classification
+
+TODO:
+- Finetuning of model
+- Visuals on Web page
+- Classification
