@@ -9,12 +9,17 @@ import pandas as pd
 from nltk.tokenize import word_tokenize
 from nltk.stem import WordNetLemmatizer
 from sqlalchemy import create_engine
+import pickle
 
 from sklearn.pipeline import Pipeline
 from sklearn.metrics import confusion_matrix
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.feature_extraction.text import CountVectorizer, TfidfTransformer
+from sklearn.datasets import make_multilabel_classification
+from sklearn.multioutput import MultiOutputClassifier
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.metrics import classification_report
 
 url_regex = 'http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+'
 
@@ -24,7 +29,7 @@ def load_data(database_filepath):
     print(database_filepath)
     engine = create_engine('sqlite:///{}'.format(database_filepath))
     cur = engine.connect()
-    df = pd.read_sql_table('Table', database_filepath)
+    df = pd.read_sql_table('Table', engine)
     X = df.message.values
     Y = df.loc[:,'related':'direct_report'].values
     
@@ -64,7 +69,7 @@ def evaluate_model(model, X_test, Y_test, category_names):
     c=0
     for column in category_names:
         print(column)
-        print(classification_report(y_test[c],predicted[c],target_names=column))
+        print(classification_report(Y_test[c],predicted[c],target_names=column))
         c = c+1
 
     
