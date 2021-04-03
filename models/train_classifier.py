@@ -21,6 +21,8 @@ from sklearn.datasets import make_multilabel_classification
 from sklearn.multioutput import MultiOutputClassifier
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.metrics import classification_report
+from sklearn.naive_bayes import GaussianNB
+from sklearn.svm import LinearSVC
 
 url_regex = 'http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+'
 
@@ -60,7 +62,7 @@ def build_model():
                     ('vect', CountVectorizer(tokenizer=tokenize)),
                     ('tfidf', TfidfTransformer())
                 ])),
-        ('clf' , MultiOutputClassifier(AdaBoostClassifier()))    
+        ('clf' , MultiOutputClassifier(RandomForestClassifier()))    
     ])
     return pipeline
 
