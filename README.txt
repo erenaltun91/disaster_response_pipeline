@@ -20,10 +20,12 @@ I tried: "Help me! Everywhere is fire."
 
 Resoruces:
 https://www.kaggle.com/depture/multiclass-and-multi-output-classification
+https://towardsdatascience.com/how-to-tune-a-decision-tree-f03721801680
+https://scikit-learn.org/stable/modules/multiclass.html
 
 
 TODO:
 - Finetuning of model
 - Visuals on Web page
-- Classification: https://scikit-learn.org/stable/modules/multiclass.html
+- Classification: 
 
