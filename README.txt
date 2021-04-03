@@ -25,4 +25,5 @@ https://www.kaggle.com/depture/multiclass-and-multi-output-classification
 TODO:
 - Finetuning of model
 - Visuals on Web page
-- Classification
+- Classification: https://scikit-learn.org/stable/modules/multiclass.html
+
