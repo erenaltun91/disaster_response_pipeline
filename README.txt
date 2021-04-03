@@ -15,9 +15,12 @@ Run the following command in the app's directory to run your web app:
     python run.py
 
 Go to http://0.0.0.0:3001/ or https://view6914b2f4-3001.udacity-student-workspaces.com/
+and type in the message you want to classify.
+I tried: "Help me! Everywhere is fire."
 
 Resoruces:
 https://www.kaggle.com/depture/multiclass-and-multi-output-classification
+
 
 TODO:
 - Finetuning of model
