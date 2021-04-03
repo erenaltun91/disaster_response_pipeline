@@ -21,6 +21,17 @@ url_regex = 'http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-
 
 
 def load_data(messages_filepath, categories_filepath):
+    """
+    Loads data from .csv-files, extracts needed data and modifies it to get the needed columns.
+    
+    INPUT:
+    messages_filepath - path of the message-file
+    categories_filepath - path of the categories-file
+    
+    OUTPUT:
+    df - dataframe with merged data from both .csv-files and one-hot encoded categories
+    
+    """
     # load messages dataset
     messages = pd.read_csv(messages_filepath,sep=',',engine='python')
     print(messages.head())
@@ -71,6 +82,16 @@ def load_data(messages_filepath, categories_filepath):
 
 
 def clean_data(df):
+    """
+    Cleans data from dataframe by dropping duplicates, nan-values and values which are not suitable for one-hot encoding
+    
+    INPUT:
+    df - dataframe loaded before
+    
+    OUTPUT:
+    df - cleaned dataframe
+    
+    """
     # check number of duplicates
     duplicated_count = df.duplicated().sum()
     
@@ -80,15 +101,33 @@ def clean_data(df):
     else:
         print("No duplicates")
     
-    #Drop nan for prediction
+    # drop nan for prediction
     df = df.dropna(axis=0)
+    
+    # drop all rows with a number other than 0 or 1
+    df = df.drop(df[df['related'] == 2].index,axis=0)
+    
+    
     
     return df
 
 
 def save_data(df, database_filename):
+    """
+    Saves dataframe to a .db-file
+    
+    INPUT:
+    df - dataframe loaded and cleaned before
+    database_filename - path to save .db-file with dataframe
+    
+    OUTPUT:
+    database as .db-file 
+    
+    """
+    # create engine for database connection
     engine = create_engine('sqlite:///'+database_filename)
-    print(df.head())
+    
+    # save dataframe to database file
     df.to_sql('Table', engine, index=False) 
 
 
