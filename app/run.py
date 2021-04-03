@@ -16,6 +16,16 @@ from sqlalchemy import create_engine
 app = Flask(__name__)
 
 def tokenize(text):
+    """
+    Converts text to clean tokens.
+    
+    INPUT:
+    text - text or message 
+    
+    OUTPUT:
+    clean_tokens - list of modified words
+    
+    """
     tokens = word_tokenize(text)
     lemmatizer = WordNetLemmatizer()
 
@@ -29,6 +39,7 @@ def tokenize(text):
 # load data
 engine = create_engine('sqlite:///data/DisasterResponse.db')
 df = pd.read_sql_table('Table', engine)
+print(df.columns)
 
 # load model
 model = joblib.load(os.getcwd()+"/models/classifier.pkl")
@@ -41,8 +52,12 @@ def index():
     
     # extract data needed for visuals
     # TODO: Below is an example - modify to extract data for your own visuals
-    genre_counts = df.groupby('genre').count()['message']
-    genre_names = list(genre_counts.index)
+    sums_dict = {}
+    for column in df.loc[:,'related':]:
+        sums_dict[column+'_sum']=df[column].sum()
+    
+    category_counts = list(sums_dict.values())
+    category_names = list(sums_dict.keys())
     
     # create visuals
     # TODO: Below is an example - modify to create your own visuals
@@ -50,18 +65,18 @@ def index():
         {
             'data': [
                 Bar(
-                    x=genre_names,
-                    y=genre_counts
+                    x=category_names,
+                    y=category_counts
                 )
             ],
 
             'layout': {
-                'title': 'Distribution of Message Genres',
+                'title': 'Distribution of Message Categories',
                 'yaxis': {
                     'title': "Count"
                 },
                 'xaxis': {
-                    'title': "Genre"
+                    'title': "Category"
                 }
             }
         }
