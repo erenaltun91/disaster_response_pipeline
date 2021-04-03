@@ -25,7 +25,7 @@ https://scikit-learn.org/stable/modules/multiclass.html
 
 
 TODO:
-- Finetuning of model
+- Descriptions
 - Visuals on Web page
-- Classification: 
+
 
