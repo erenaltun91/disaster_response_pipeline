@@ -23,26 +23,53 @@ from sklearn.neighbors import KNeighborsClassifier
 from sklearn.metrics import classification_report
 from sklearn.naive_bayes import GaussianNB
 from sklearn.svm import LinearSVC
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.model_selection import GridSearchCV
 
 url_regex = 'http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+'
 
 
 def load_data(database_filepath):
-    print(os.getcwd())
-    print(database_filepath)
+    """
+    Loads data from .db-file and extracts needed data.
+    
+    INPUT:
+    database_filepath - path of the .db-file
+    
+    OUTPUT:
+    X - the messages column, which should be used to train the calssifier  
+    Y - the categories/classes columns, which should be used to train the classifier 
+    category_names - name of the categories/classes
+    
+    
+    """
+    # create engine for database connection
     engine = create_engine('sqlite:///{}'.format(database_filepath))
     cur = engine.connect()
+    # read table as dataframe
     df = pd.read_sql_table('Table', engine)
+    # messages as values for the X
     X = df.message.values
-    Y = df.loc[:,'related':'direct_report'].values
+    # categories as values for the Y
+    Y = df.loc[:,'related':].values
     
     
-    category_names = list(df.columns)
+    category_names = list(df.loc[:,'related':].columns)
     
     return X,Y,category_names
 
 
-def tokenize(text):
+def tokenize(text): 
+    """
+    Converts text to clean tokens.
+    
+    INPUT:
+    text - text or message 
+    
+    OUTPUT:
+    clean_tokens - list of modified words
+    
+    """
     tokens = word_tokenize(text)
     lemmatizer = WordNetLemmatizer()
 
@@ -55,6 +82,16 @@ def tokenize(text):
 
 
 def build_model():
+    """
+    Builds model pipeline.
+    
+    INPUT:
+    
+    
+    OUTPUT:
+    model_pipeline
+    
+    """
     #initialize pipeline
     pipeline =  Pipeline([
 
@@ -64,11 +101,34 @@ def build_model():
                 ])),
         ('clf' , MultiOutputClassifier(RandomForestClassifier()))    
     ])
-    return pipeline
+    
+    #set parameters for GridSearchCV-method
+    parameters = {
+    'clf__estimator__criterion':['gini','entropy'],
+    'clf__estimator__max_features':['auto','sqrt','log2'] 
+    }
+
+    model_pipeline = GridSearchCV(pipeline,param_grid=parameters)
+    
+    return model_pipeline
 
 
 def evaluate_model(model, X_test, Y_test, category_names):
+    """
+    Evaluate your model with predicting the classes and test against the true classes with specific measures.
+    INPUT:
+    model - trained model
+    X_test - message values of the testset
+    Y_test - true classes used to compare predicted values
+    category_names - names of the categories/classes to be estimated
+    
+    OUTPUT:
+    Prints out classification report for each column
+    
+    """
+    #predict values
     predicted = model.predict(X_test)
+    #print out classification report for each column
     c=0
     for column in category_names:
         print(column)
@@ -79,6 +139,18 @@ def evaluate_model(model, X_test, Y_test, category_names):
 
 
 def save_model(model, model_filepath):
+    """
+    Save the model to a .pickle-file
+    
+    INPUT:
+    model - trained and evaluated model
+    model_filepath - path to save the .pickle-file
+    
+    OUTPUT:
+    .pickle-file
+    
+    """
+    # save model as pickle-file
     pickle.dump(model, open(model_filepath, 'wb'))
 
 
