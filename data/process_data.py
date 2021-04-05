@@ -34,12 +34,8 @@ def load_data(messages_filepath, categories_filepath):
     """
     # load messages dataset
     messages = pd.read_csv(messages_filepath,sep=',',engine='python')
-    print(messages.head())
-    print(messages.columns)
     # load categories dataset
     categories = pd.read_csv(categories_filepath,sep=',',engine='python')
-    print(categories.head())
-    print(categories.columns)
     
     # merge datasets
     messages.id.astype(int)
