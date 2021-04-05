@@ -4,11 +4,17 @@ This project loads data about disaster messages, displays visual on a web page a
 ## Installations
 - Put the files in this repo into a folder of your choice
 - Install following python libraries:
-    - pandas, numpy, matplotlib
+    - pandas, numpy, matplotlib, nltk, sqlalchemy, pickle,sklearn, flask, plotly
     
 `pip install numpy`  
 `pip install pandas`  
 `pip install matplotlib`
+`pip install nltk`
+`pip install sqlalchemy`
+`pip install pickle`
+`pip install sklearn`
+`pip install flask`
+`pip install plotly`
 
 ## Project Motivation
 - In the course of the Data Scientist Nanodegree Prgram this analysis was done to classify messages from disasters
