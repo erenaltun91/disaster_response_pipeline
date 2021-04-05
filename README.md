@@ -48,16 +48,16 @@ This project loads data about disaster messages, displays visual on a web page a
 - Opem the command terminal
 - Set your chosen folder as the workingspace
 - Run the following commands in terminal:
-    - 1. Loading and cleaning of the data and saving data in a db-file.
+    - 1. Loading and cleaning of the data and saving data in a db-file  
     `python data/process_data.py data/disaster_messages.csv data/disaster_categories.csv data/DisasterResponse.db`
 
-    - 2. Loading the data from the db file and training a model with an evaluation of that model
+    - 2. Loading the data from the db file and training a model with an evaluation of that model  
     `python models/train_classifier.py data/DisasterResponse.db models/classifier.pkl`
 
-    - 3. Run this model in an application
+    - 3. Run this model in an application  
     `python app/run.py`
 
-- Go to http://0.0.0.0:3001/ or https://view6914b2f4-3001.udacity-student-workspaces.com/ and type in the message you want to classify.
+- Go to http://0.0.0.0:3001/ or https://view6914b2f4-3001.udacity-student-workspaces.com/ and type in the message you want to classify  
     - I tried: "Help me! Everywhere is fire."
 
 ## Summary
