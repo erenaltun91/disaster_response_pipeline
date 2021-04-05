@@ -99,7 +99,7 @@ def build_model():
                     ('vect', CountVectorizer(tokenizer=tokenize)),
                     ('tfidf', TfidfTransformer())
                 ])),
-        ('clf' , MultiOutputClassifier(RandomForestClassifier()))    
+        ('clf' , MultiOutputClassifier(DecisionTreeClassifier()))    
     ])
     
     #set parameters for GridSearchCV-method
