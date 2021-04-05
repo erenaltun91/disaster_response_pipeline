@@ -75,8 +75,8 @@ This project loads data about disaster messages, displays visual on a web page a
 LinkedIn: https://www.linkedin.com/in/eren-altun91/
 
 
-### Resources:
-https://www.kaggle.com/depture/multiclass-and-multi-output-classification
-https://towardsdatascience.com/how-to-tune-a-decision-tree-f03721801680
-https://scikit-learn.org/stable/modules/multiclass.html
-https://www.saltycrane.com/blog/2007/09/how-to-sort-python-dictionary-by-keys/
+### Resources:  
+https://www.kaggle.com/depture/multiclass-and-multi-output-classification  
+https://towardsdatascience.com/how-to-tune-a-decision-tree-f03721801680  
+https://scikit-learn.org/stable/modules/multiclass.html  
+https://www.saltycrane.com/blog/2007/09/how-to-sort-python-dictionary-by-keys/  
