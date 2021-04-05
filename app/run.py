@@ -15,6 +15,7 @@ from sqlalchemy import create_engine
 
 app = Flask(__name__)
 
+
 def tokenize(text):
     """
     Converts text to clean tokens.
@@ -39,7 +40,7 @@ def tokenize(text):
 # load data
 engine = create_engine('sqlite:///data/DisasterResponse.db')
 df = pd.read_sql_table('Table', engine)
-print(df.columns)
+
 
 # load model
 model = joblib.load(os.getcwd()+"/models/classifier.pkl")
@@ -54,10 +55,17 @@ def index():
     # TODO: Below is an example - modify to extract data for your own visuals
     sums_dict = {}
     for column in df.loc[:,'related':]:
-        sums_dict[column+'_sum']=df[column].sum()
+        sums_dict[column]=df[column].sum()
+        
+    sorted_keys = sorted(sums_dict, key=sums_dict.get,reverse=True)  # [1, 3, 2]
     
-    category_counts = list(sums_dict.values())
-    category_names = list(sums_dict.keys())
+    sorted_dict = {}
+    for w in sorted_keys:
+        sorted_dict[w] = sums_dict[w]
+
+    
+    category_counts = list(sorted_dict.values())
+    category_names = list(sorted_dict.keys())
     
     # create visuals
     # TODO: Below is an example - modify to create your own visuals
@@ -68,6 +76,8 @@ def index():
                     x=category_names,
                     y=category_counts
                 )
+               
+               
             ],
 
             'layout': {
@@ -79,7 +89,8 @@ def index():
                     'title': "Category"
                 }
             }
-        }
+        }       
+        
     ]
     
     # encode plotly graphs in JSON
@@ -87,7 +98,7 @@ def index():
     graphJSON = json.dumps(graphs, cls=plotly.utils.PlotlyJSONEncoder)
     
     # render web page with plotly graphs
-    return render_template('master.html', ids=ids, graphJSON=graphJSON)
+    return render_template('master.html', data_set = sums_dict,ids=ids, graphJSON=graphJSON)
 
 
 # web page that handles user query and displays model results
