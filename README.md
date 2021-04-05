@@ -58,7 +58,7 @@ This project loads data about disaster messages, displays visual on a web page a
     `python app/run.py`
 
 - Go to http://0.0.0.0:3001/ or https://view6914b2f4-3001.udacity-student-workspaces.com/ and type in the message you want to classify  
-    - I tried: "Help me! Everywhere is fire."
+    - I tried: "There is a storm!"
 
 ## Summary
 - The most common category is 'related' and the least common category is 'child_alone'
